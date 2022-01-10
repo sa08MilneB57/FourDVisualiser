@@ -264,7 +264,7 @@ class FunctionPlotDemo implements Demo{
   
   void setShape(int i){
     //changes the currently selected shape
-    plot = new FourFunctionSurface(new FourVector(100,0,0,0),5,101,5,101);
+    plot = new FourFunctionSurface(new FourVector(0,0,0,100),5,101,5,101);
     plot.applyFunction(FUNCTIONS[i]);
     plot.generateSheet();
     hudLine1 = FUNCTIONS[i].name();
