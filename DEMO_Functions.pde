@@ -1,4 +1,20 @@
-class ShapeDemo implements Demo{
+int functionNumber = 0;
+ComplexFunction[] FUNCTIONS= {new CIdentity(),  new CReciprocal(),
+                              new CSquare(),    new CCube(),
+                              new CSqrt(),      new CQuartish(),
+                              new CExp(),new CLog(),
+                              
+                              new CSin(),new CCos(),new CTan(),
+                              new CSinh(),new CCosh(),new CTanh(), 
+                              new CASin(),new CACos(),new CATan(),
+                              new CASinh(),new CACosh(),new CATanh(),
+                              
+                              new CBinet(),new CMandel(25),
+                              new CGauss(),new CGaussAbs(),new CErf(0.125/8),
+                              new CZeta(30),new CGamma(30),new CReciprocalGamma(30)
+                          };
+
+class FunctionPlotDemo implements Demo{
   PeasyCam cam;
   PApplet parent;  
   final float degrees = PI/180f;
@@ -18,7 +34,7 @@ class ShapeDemo implements Demo{
   FourMatrix rotorXY, rotorXZ, rotorYZ, rotorXW, rotorYW, rotorZW; //These matrices remain constant through the simulation and are shorthand for rotation matrices.
   FourMatrix negrotorXY, negrotorXZ, negrotorYZ, negrotorXW, negrotorYW, negrotorZW;;
   
-  FourShape shape;//currently selected shape
+  FourFunctionSurface plot;//currently selected shape
   String hudLine1;
   
   boolean camRotate = false; //whether we rotate the 4D camera or the object itself
@@ -27,7 +43,7 @@ class ShapeDemo implements Demo{
   boolean showGuides = true;
   boolean recording = false;
   
-  ShapeDemo(PApplet _parent){
+  FunctionPlotDemo(PApplet _parent){
     parent = _parent;
   }
   
@@ -122,8 +138,12 @@ class ShapeDemo implements Demo{
       recording = !recording;
     } else if (key=='x') {  //toggle guides
       showGuides = !showGuides;
-    } else if (Character.isDigit(key)){ //number keys control shape
-      setShape(key - '0');
+    } else if (key=='0'){ //number keys control shape
+      functionNumber = (functionNumber+1) % FUNCTIONS.length;
+      setShape(functionNumber);
+    } else if (key=='1'){ //number keys control shape
+      functionNumber = (functionNumber-1+FUNCTIONS.length) % FUNCTIONS.length;
+      setShape(functionNumber);
     } else if (key=='#'){  //rotate camera or shape
       camRotate=!camRotate;
     } else if (key=='[') { //draw shape lines
@@ -188,40 +208,40 @@ class ShapeDemo implements Demo{
   void applyUserRotation(){
     //applies rotation from 4D camera movements to the shape
     if (XY == -1) {
-      shape.applyMatrix(negrotorXY, camRotate);
+      plot.applyMatrix(negrotorXY, camRotate);
     }
     if (XY == 1) {
-      shape.applyMatrix(rotorXY, camRotate);
+      plot.applyMatrix(rotorXY, camRotate);
     }
     if (XZ == -1) {
-      shape.applyMatrix(negrotorXZ, camRotate);
+      plot.applyMatrix(negrotorXZ, camRotate);
     }
     if (XZ == 1) {
-      shape.applyMatrix(rotorXZ, camRotate);
+      plot.applyMatrix(rotorXZ, camRotate);
     }
     if (YZ == -1) {
-      shape.applyMatrix(negrotorYZ, camRotate);
+      plot.applyMatrix(negrotorYZ, camRotate);
     }
     if (YZ == 1) {
-      shape.applyMatrix(rotorYZ, camRotate);
+      plot.applyMatrix(rotorYZ, camRotate);
     }
     if (XW == -1) {
-      shape.applyMatrix(negrotorXW, camRotate);
+      plot.applyMatrix(negrotorXW, camRotate);
     }
     if (XW == 1) {
-      shape.applyMatrix(rotorXW, camRotate);
+      plot.applyMatrix(rotorXW, camRotate);
     }
     if (YW == -1) {
-      shape.applyMatrix(negrotorYW, camRotate);
+      plot.applyMatrix(negrotorYW, camRotate);
     }
     if (YW == 1) {
-      shape.applyMatrix(rotorYW, camRotate);
+      plot.applyMatrix(rotorYW, camRotate);
     }
     if (ZW == -1) {
-      shape.applyMatrix(negrotorZW, camRotate);
+      plot.applyMatrix(negrotorZW, camRotate);
     }
     if (ZW == 1) {
-      shape.applyMatrix(rotorZW, camRotate);
+      plot.applyMatrix(rotorZW, camRotate);
     }
   }
   
@@ -229,9 +249,9 @@ class ShapeDemo implements Demo{
     //draws the displayed shape to the 3D world.
     strokeWeight(shapeStrokeWeight);
     if (projection==-1) {
-      shape.persp(focalLength, drawLines, drawFaces);
+      plot.shape.persp(focalLength, drawLines, drawFaces);
     } else {
-      shape.ortho(projection, drawLines, drawFaces);
+      plot.shape.ortho(projection, drawLines, drawFaces);
     }
   }
   
@@ -244,50 +264,10 @@ class ShapeDemo implements Demo{
   
   void setShape(int i){
     //changes the currently selected shape
-    switch(i){
-      case 1:
-        shape = hypersphere(new FourVector(0, 0, 0, 105), 100, 32, 16, 16);
-        hudLine1 = "Hypersphere";
-        break;
-      case 2:
-        shape = tesseract(new FourVector(0, 0, 0, 50), 50);
-        hudLine1 = "Tesseract";
-        break;
-      case 3:
-        shape = pentachoron(new FourVector(0, 0, 0, 51), 49);
-        hudLine1 = "Pentachoron (5-cell)";
-        break;
-      case 4:
-        shape = orthoplex(new FourVector(0, 0, 0, 50), 50,amber);
-        hudLine1 = "Orthoplex (16-cell)";
-        break;
-      case 5:
-        shape = octaplex(new FourVector(0, 0, 0, 51), 50,amber);
-        hudLine1 = "Octaplex (24-cell)";
-        break;
-      case 6:
-        shape = spherinder(new FourVector(0, 0, 0, 105), 80, 80, 32, 16, 16);
-        hudLine1 = "Spherinder";
-        break;
-      case 7:
-        shape = sphericone(new FourVector(0, 0, 0, 105), 80, 80, 32, 16, 16);
-        hudLine1 = "Sphericone";
-        break;
-      case 8:
-        shape = cliffordtorus(new FourVector(0, 0, 0, 51), 50/sqrt(2), 48);
-        hudLine1 = "Clifford Torus";
-        break;
-      case 9:
-        shape = kleinbottle(new FourVector(0, 0, 0, 60), 30, 25, 32, 32);
-        hudLine1 = "Klein Bottle (Pinched Torus Embedding)";
-        break;
-      case 0:
-        shape = kleinbottleFIG8(new FourVector(0, 0, 0, 70), 30, 5, 10f, 24, 24);
-        hudLine1 = "Klein Bottle (Figure-8 Embedding)";
-        break;
-      default:
-        setShape(2);
-    }
+    plot = new FourFunctionSurface(new FourVector(100,0,0,0),5,101,5,101);
+    plot.applyFunction(FUNCTIONS[i]);
+    plot.generateSheet();
+    hudLine1 = FUNCTIONS[i].name();
   }
   void updateProjString(){
     //updates the name of the projection displayed on the HUD

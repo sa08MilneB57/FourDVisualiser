@@ -41,71 +41,72 @@ class FourFace {
   public final int hashCode() {return indices.hashCode();}
 }
 
-class FourPoint{
-  FourVector pos,o;
-  private float r;
-  private color pointcol;
-  private FourShape sphere;
-  FourPoint(FourVector position,float radius,color col){
-    pos=position;
-    o = new FourVector(0,0,0,0);
-    r=radius;
-    pointcol = col;
-    sphere = hypersphere(pos, r, 6, 6, 6);
-  }
-  FourPoint(FourVector position,FourVector origin,float radius,color col){
-    pos=position;
-    o = origin;
-    r=radius;
-    pointcol = col;
-    sphere = hypersphere(pos, r, 6, 6, 6);
-  }
+//draws a sphere at a particular point in 4D space, a convenience class
+//class FourPoint{
+//  FourVector pos,o;
+//  private float r;
+//  private color pointcol;
+//  private FourShape sphere;
+//  FourPoint(FourVector position,float radius,color col){
+//    pos=position;
+//    o = new FourVector(0,0,0,0);
+//    r=radius;
+//    pointcol = col;
+//    sphere = hypersphere(pos, r, 6, 6, 6);
+//  }
+//  FourPoint(FourVector position,FourVector origin,float radius,color col){
+//    pos=position;
+//    o = origin;
+//    r=radius;
+//    pointcol = col;
+//    sphere = hypersphere(pos, r, 6, 6, 6);
+//  }
   
-  void applyMatrix(FourMatrix M, boolean global){
-    FourVector newv = (global)? M.multiply(pos) : M.multiply(pos.sub(o)).add(o);
-    sphere.slide(newv.sub(pos));
-    pos = newv;
-  }
+//  void applyMatrix(FourMatrix M, boolean global){
+//    FourVector newv = (global)? M.multiply(pos) : M.multiply(pos.sub(o)).add(o);
+//    sphere.slide(newv.sub(pos));
+//    pos = newv;
+//  }
   
-  void refresh(float len){
-    pos = new FourVector(random(2*len)-len,random(2*len)-len,random(2*len)-len,random(2*len)-len).add(o);
-    sphere.slide(pos.sub(sphere.anchor));
-  }
+//  void refresh(float len){
+//    pos = new FourVector(random(2*len)-len,random(2*len)-len,random(2*len)-len,random(2*len)-len).add(o);
+//    sphere.slide(pos.sub(sphere.anchor));
+//  }
   
-  void stepTime(FourMatrix M,float dt, float maxDistance){
-    float maxDistance2 = maxDistance*maxDistance;
-    FourVector vel = M.multiply(pos.sub(o)).mult(dt);
-    pos = pos.add(vel);
-    float dis2 = pos.sub(o).mag2(); 
-    if(dis2>maxDistance2 || dis2<0.1){
-      refresh(maxDistance);
-    } else {
-      sphere.slide(vel);
-    }
-  }
+//  void stepTime(FourMatrix M,float dt, float maxDistance){
+//    float maxDistance2 = maxDistance*maxDistance;
+//    FourVector vel = M.multiply(pos.sub(o)).mult(dt);
+//    pos = pos.add(vel);
+//    float dis2 = pos.sub(o).mag2(); 
+//    if(dis2>maxDistance2 || dis2<0.1){
+//      refresh(maxDistance);
+//    } else {
+//      sphere.slide(vel);
+//    }
+//  }
   
-  void ortho(int coord) {
-    noFill();
-    for (FourLine l : sphere.lines) {
-      if(l.nullLine){continue;}
-      PVector a = sphere.points[l.index1].sub(o).ortho(coord);
-      PVector b = sphere.points[l.index2].sub(o).ortho(coord);
-      stroke(l.col);
-      line(a.x, a.y, a.z, b.x, b.y, b.z);
-    }
-  }
+//  void ortho(int coord) {
+//    noFill();
+//    for (FourLine l : sphere.lines) {
+//      if(l.nullLine){continue;}
+//      PVector a = sphere.points[l.index1].sub(o).ortho(coord);
+//      PVector b = sphere.points[l.index2].sub(o).ortho(coord);
+//      stroke(l.col);
+//      line(a.x, a.y, a.z, b.x, b.y, b.z);
+//    }
+//  }
   
-  void persp(float focalLength) {
-    noFill();
-    for (FourLine l : sphere.lines) {
-      if(l.nullLine){continue;}
-      PVector a = sphere.points[l.index1].persp(focalLength);
-      PVector b = sphere.points[l.index2].persp(focalLength);
-      stroke(pointcol);
-      line(a.x, a.y, a.z, b.x, b.y, b.z);
-    }
-  }
-}
+//  void persp(float focalLength) {
+//    noFill();
+//    for (FourLine l : sphere.lines) {
+//      if(l.nullLine){continue;}
+//      PVector a = sphere.points[l.index1].persp(focalLength);
+//      PVector b = sphere.points[l.index2].persp(focalLength);
+//      stroke(pointcol);
+//      line(a.x, a.y, a.z, b.x, b.y, b.z);
+//    }
+//  }
+//}
 
 class FourShape {
   FourVector anchor;

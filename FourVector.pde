@@ -1,3 +1,4 @@
+
 class FourVector{
   float x,y,z,w;
   FourVector(float _x,float _y, float _z, float _w){
@@ -48,6 +49,11 @@ class FourVector{
   }
 }
 
+FourVector fourDComplex(Complex z, Complex w){return fourDComplex(z, w,10);}
+FourVector fourDComplex(Complex z, Complex w,float scale){
+  return new FourVector(scale * (float)z.re,scale * (float)z.im,scale * (float)w.re,scale * (float)w.im);
+}
+
 FourVector sphericalCoordinates(float lon, float lat, float let){return sphericalCoordinates(lon, lat, let,1f);}
 FourVector sphericalCoordinates(float lon, float lat, float let,float r){
   //on wikipedia for glome let is psi, lat is theta, lon is phi
@@ -96,6 +102,7 @@ class FourMatrix{
   float[] asArray(){float[] out = {xx,xy,xz,xw,yx,yy,yz,yw,zx,zy,zz,zw,wx,wy,wz,ww}; return out;}
   
   FourVector multiply(FourVector v){
+    //this multiplies v from the left
     float ux = xx*v.x + xy*v.y + xz*v.z + xw*v.w;
     float uy = yx*v.x + yy*v.y + yz*v.z + yw*v.w;
     float uz = zx*v.x + zy*v.y + zz*v.z + zw*v.w;
@@ -103,6 +110,8 @@ class FourMatrix{
     return new FourVector(ux,uy,uz,uw);
   }
   FourMatrix multiply(FourMatrix O){
+    //this multiplies O from the left
+    //eq. O multiplies this from the right
     float[] matrix =  new float[16];
     float[] self = this.asArray();
     float[] other = O.asArray();
@@ -159,6 +168,14 @@ float pauliDeterminant(float x,float y,float z,float w){
   float l = w*w - x*x - y*y - z*z;
   return l*l;
 }
+FourMatrix compTwoMatrix(Complex xx, Complex xy,
+                         Complex yx, Complex yy){
+  return new FourMatrix((float)xx.re,   (float)-xx.im, (float)xy.re,  (float)-xy.im,
+                        (float)xx.im,   (float)xx.re,  (float)xy.im,  (float)xy.re,
+                        (float)yx.re,   (float)-yx.im, (float)yy.re,  (float)-yy.im,
+                        (float)yx.im,   (float)yx.re,  (float)yy.im,  (float)yy.re);
+}
+
 FourMatrix pauli(FourVector p){return pauli(p.w,p.x,p.y,p.z);}
 FourMatrix pauli(float w, float x, float y, float z){
   return new FourMatrix(w+z,0,x,y,
