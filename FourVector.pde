@@ -65,10 +65,10 @@ FourVector sphericalCoordinates(float lon, float lat, float let,float r){
 }
 
 FourVector lorentzCoordinates(float lon, float lat, float hlet,float r){
-  float w = r*(float)Math.cosh(hlet);
-  float z = r*(float)Math.sinh(hlet)*cos(lat);
-  float y = r*(float)Math.sinh(hlet)*sin(lat)*cos(lon);
-  float x = r*(float)Math.sinh(hlet)*sin(lat)*sin(lon);
+  float w = r*(float)Math.sinh(hlet);
+  float x = r*(float)Math.cosh(hlet)*cos(lat);
+  float y = r*(float)Math.cosh(hlet)*sin(lat)*cos(lon);
+  float z = r*(float)Math.cosh(hlet)*sin(lat)*sin(lon);
   return new FourVector(x,y,z,w);
 }
 

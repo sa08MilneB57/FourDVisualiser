@@ -124,6 +124,8 @@ class ShapeDemo implements Demo{
       showGuides = !showGuides;
     } else if (Character.isDigit(key)){ //number keys control shape
       setShape(key - '0');
+    } else if (key=='`'){ //number keys control shape
+      setShape(10);
     } else if (key=='#'){  //rotate camera or shape
       camRotate=!camRotate;
     } else if (key=='[') { //draw shape lines
@@ -284,6 +286,10 @@ class ShapeDemo implements Demo{
       case 0:
         shape = kleinbottleFIG8(new FourVector(0, 0, 0, 70), 30, 5, 10f, 24, 24);
         hudLine1 = "Klein Bottle (Figure-8 Embedding)";
+        break;
+      case 10:
+        shape = hyperboloid(new FourVector(0, 0, 0, 105), 50, 32, 16, 32);
+        hudLine1 = "Hyperboloid";
         break;
       default:
         setShape(2);

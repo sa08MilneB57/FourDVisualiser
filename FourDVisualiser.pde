@@ -8,7 +8,7 @@ interface Demo {
   void demoKeyReleased(char key);
 }
 
-final Demo demo = new FunctionPlotDemo(this);
+final Demo demo = new ShapeDemo(this);
 
 void keyPressed() {
   demo.demoKeyPressed(key);

@@ -8,7 +8,7 @@ ComplexFunction[] FUNCTIONS= {new CIdentity(),  new CReciprocal(),
                               new CSinh(),new CCosh(),new CTanh(), 
                               new CASin(),new CACos(),new CATan(),
                               new CASinh(),new CACosh(),new CATanh(),
-                              
+                                
                               new CBinet(),new CMandel(25),
                               new CGauss(),new CGaussAbs(),new CErf(0.125/8),
                               new CZeta(30),new CGamma(30),new CReciprocalGamma(30)
