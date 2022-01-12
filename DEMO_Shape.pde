@@ -124,8 +124,10 @@ class ShapeDemo implements Demo{
       showGuides = !showGuides;
     } else if (Character.isDigit(key)){ //number keys control shape
       setShape(key - '0');
-    } else if (key=='`'){ //number keys control shape
+    } else if (key=='`'){ 
       setShape(10);
+    } else if (key=='¬'){ 
+      setShape(11);
     } else if (key=='#'){  //rotate camera or shape
       camRotate=!camRotate;
     } else if (key=='[') { //draw shape lines
@@ -289,7 +291,11 @@ class ShapeDemo implements Demo{
         break;
       case 10:
         shape = hyperboloid(new FourVector(0, 0, 0, 105), 50, 32, 16, 32);
-        hudLine1 = "Hyperboloid";
+        hudLine1 = "Hyperboloid: x^2+y^2+z^2-w^2";
+        break;
+      case 11:
+        shape = hyperboloid2(new FourVector(0, 0, 0, 105), 50, 32, 16, 32);
+        hudLine1 = "Hyperboloid: x^2+y^2-z^2-w^2";
         break;
       default:
         setShape(2);

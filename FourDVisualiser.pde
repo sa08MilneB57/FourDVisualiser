@@ -8,8 +8,8 @@ interface Demo {
   void demoKeyReleased(char key);
 }
 
-//final Demo demo = new ShapeDemo(this);
-final Demo demo = new FunctionPlotDemo(this);
+final Demo demo = new ShapeDemo(this);
+//final Demo demo = new FunctionPlotDemo(this);
 
 void keyPressed() {
   demo.demoKeyPressed(key);
