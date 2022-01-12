@@ -1,3 +1,10 @@
+color capBrightness(color clr, float maxBright){//leaves Alpha Alone
+  float red = (red(clr)*maxBright) / 255f;
+  float green = (green(clr)*maxBright) / 255f;
+  float blue = (blue(clr)*maxBright) / 255f;
+  return color(red,green,blue,alpha(clr));
+}
+
 color YCoCg(float Y, float Co, float Cg){return YCoCg(Y,Co,Cg,1f);}
 color YCoCg(float Y, float Co, float Cg,float alpha){
   //Y:[0,1] ;  Co,Cg:[-0.5,0.5]

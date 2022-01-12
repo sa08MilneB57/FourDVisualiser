@@ -192,9 +192,13 @@ class FourShape {
     if(drawlines){
       for (FourLine l : lines) {
         if(l.nullLine){continue;}
+        color clr = l.col;
+        if(points[l.index1].w <= 0 || points[l.index2].w <= 0){
+          clr = capBrightness(clr,127);
+        }
         PVector a = points[l.index1].ortho(coord);
         PVector b = points[l.index2].ortho(coord);
-        stroke(l.col);
+        stroke(clr);
         line(a.x, a.y, a.z, b.x, b.y, b.z);
       }
     }
@@ -218,7 +222,7 @@ class FourShape {
     if (drawlines){
       noFill();
       for (FourLine l : lines) {
-        if(l.nullLine){continue;}
+        if(l.nullLine||points[l.index1].w <= 0 || points[l.index2].w <= 0){continue;}
         PVector a = points[l.index1].persp(focalLength);
         PVector b = points[l.index2].persp(focalLength);
         stroke(l.col);
