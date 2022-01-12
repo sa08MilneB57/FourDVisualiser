@@ -49,6 +49,10 @@ class FourVector{
   }
 }
 
+FourVector lerp(FourVector a, FourVector b, float t){
+  return a.add( (b.sub(a)).mult(t) );
+}
+
 FourVector fourDComplex(Complex z, Complex w){return fourDComplex(z, w,10);}
 FourVector fourDComplex(Complex z, Complex w,float scale){
   return new FourVector(scale * (float)z.re,scale * (float)z.im,scale * (float)w.re,scale * (float)w.im);

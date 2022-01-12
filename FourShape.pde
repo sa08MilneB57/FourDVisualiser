@@ -109,6 +109,7 @@ class FourFace {
 //}
 
 class FourShape {
+  int lineDetail = 2;
   FourVector anchor;
   FourVector[] points;
   FourLine[] lines;
@@ -222,11 +223,28 @@ class FourShape {
     if (drawlines){
       noFill();
       for (FourLine l : lines) {
-        if(l.nullLine||points[l.index1].w <= 0 || points[l.index2].w <= 0){continue;}
-        PVector a = points[l.index1].persp(focalLength);
-        PVector b = points[l.index2].persp(focalLength);
+        if(l.nullLine || (points[l.index1].w <= 0 && points[l.index2].w <= 0) || (lineDetail == 2 && (points[l.index1].w <= 0 || points[l.index2].w <= 0))){continue;}
+        FourVector a = points[l.index1];
+        FourVector b = points[l.index2];
         stroke(l.col);
-        line(a.x, a.y, a.z, b.x, b.y, b.z);
+        if(lineDetail <= 2){
+          PVector p0 = a.persp(focalLength);
+          PVector p1 = b.persp(focalLength);
+          line(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z);
+        } else {
+            float dt = 1f / lineDetail;
+            FourVector v1 = a.mult(1);
+            PVector p1 = a.persp(focalLength);
+            for(float i=0; i<lineDetail;i++){
+              println(i);
+              FourVector v0 = v1;
+              PVector p0 = p1.copy();
+              v1 = lerp(a,b,(i+1)*dt);
+              p1 = v1.persp(focalLength);
+              if(v0.w <= 0 || v1.w <= 0){continue;}
+              line(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z);
+            }
+        }
       }
     }
 
