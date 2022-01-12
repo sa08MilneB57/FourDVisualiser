@@ -9,7 +9,7 @@ ComplexFunction[] FUNCTIONS= {new CIdentity(),  new CReciprocal(),
                               new CASin(),new CACos(),new CATan(),
                               new CASinh(),new CACosh(),new CATanh(),
                                 
-                              new CBinet(),new CMandel(25),
+                              new CBinet(),new CMandel(1000),
                               new CGauss(),new CGaussAbs(),new CErf(0.125/8),
                               new CZeta(30),new CGamma(30),new CReciprocalGamma(30)
                           };
@@ -151,7 +151,7 @@ class FunctionPlotDemo implements Demo{
       recording = !recording;
     } else if (key=='x') {  //toggle guides
       showGuides = !showGuides;
-    } else if (key=='0'){ //number keys control shape
+    } else if (key=='2'){ //number keys control shape
       functionNumber = (functionNumber+1) % FUNCTIONS.length;
       setShape(functionNumber);
     } else if (key=='1'){ //number keys control shape
@@ -277,7 +277,13 @@ class FunctionPlotDemo implements Demo{
   
   void setShape(int i){
     //changes the currently selected shape
-    plot = new FourFunctionSurface(new FourVector(0,0,0,100),5,101,5,101);
+    if(i==21){//special dispensation for mandelbrot set
+      final double[] xBounds = {-1.5d,0.5d};
+      final double[] yBounds = {-1d,1d};
+      plot = new FourFunctionSurface(new FourVector(0,0,0,20),xBounds,255,yBounds,255);      
+    } else {
+      plot = new FourFunctionSurface(new FourVector(0,0,0,100),5,101,5,101);
+    }
     plot.applyFunction(FUNCTIONS[i]);
     plot.generateSheet();
     hudLine1 = FUNCTIONS[i].name();

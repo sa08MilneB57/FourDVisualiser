@@ -6,22 +6,14 @@ class FourFunctionSurface{
   FourMatrix camRotation;
   Complex[] z,w;
   FourFunctionSurface(FourVector _origin,double xRadius, int _xDetail,double yRadius, int _yDetail){
-    xDetail = _xDetail;
-    yDetail = _yDetail;
-    origin = _origin;
-    double dx = (2*xRadius) / (xDetail-1);
-    double dy = (2*xRadius) / (xDetail-1);
-    z = new Complex[xDetail * yDetail];
-    w = new Complex[xDetail * yDetail];
-    for (int j=0; j<yDetail; j++){
-      for (int i=0; i<xDetail; i++){
-        int ind = i + j*xDetail;
-        double x = i*dx - xRadius;
-        double y = j*dy - yRadius;
-        z[ind] = new Complex(x,y);
-        w[ind] = new Complex(x,y);
-      }
-    }
+    xDetail = _xDetail;    yDetail = _yDetail;    origin = _origin;
+    generateC2(xRadius,yRadius);
+    resetOrientation();
+    generateSheet();
+  }
+  FourFunctionSurface(FourVector _origin,double[] xBounds, int _xDetail,double[] yBounds, int _yDetail){
+    xDetail = _xDetail;    yDetail = _yDetail;    origin = _origin;
+    generateC2(xBounds,yBounds);
     resetOrientation();
     generateSheet();
   }
@@ -45,6 +37,42 @@ class FourFunctionSurface{
       planeRotation.multiply(M);      
     }
     shape.applyMatrix(M,global);
+  }
+  
+  void generateC2(double xRadius,double yRadius){
+    double dx = (2*xRadius) / (xDetail-1);
+    double dy = (2*xRadius) / (yDetail-1);
+    z = new Complex[xDetail * yDetail];
+    w = new Complex[xDetail * yDetail];
+    for (int j=0; j<yDetail; j++){
+      for (int i=0; i<xDetail; i++){
+        int ind = i + j*xDetail;
+        double x = i*dx - xRadius;
+        double y = j*dy - yRadius;
+        z[ind] = new Complex(x,y);
+        w[ind] = new Complex(x,y);
+      }
+    }
+  }
+  void generateC2(double[] xBounds,double[] yBounds){
+    if(xBounds.length != 2 || yBounds.length != 2){throw new IllegalArgumentException("xBounds and yBounds must be length 2, 1 lower bound, 1 upper bound");}
+    double x1 = Math.min(xBounds[0], xBounds[1]);
+    double x2 = Math.max(xBounds[0], xBounds[1]);
+    double y1 = Math.min(yBounds[0], yBounds[1]);
+    double y2 = Math.max(yBounds[0], yBounds[1]);
+    double dx = (x2-x1) / (xDetail-1);
+    double dy = (y2-y1) / (yDetail-1);
+    z = new Complex[xDetail * yDetail];
+    w = new Complex[xDetail * yDetail];
+    for (int j=0; j<yDetail; j++){
+      for (int i=0; i<xDetail; i++){
+        int ind = i + j*xDetail;
+        double x = i*dx + x1;
+        double y = j*dy + y1;
+        z[ind] = new Complex(x,y);
+        w[ind] = new Complex(x,y);
+      }
+    }
   }
   
   void generateSheet(){
