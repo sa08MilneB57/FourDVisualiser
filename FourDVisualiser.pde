@@ -8,23 +8,30 @@ interface Demo {
   void demoKeyReleased(char key);
 }
 
-final Demo demo = new ShapeDemo(this);
-//final Demo demo = new FunctionPlotDemo(this);
+int demoNum = 0;
+final Demo[] demos = {new ShapeDemo(this), 
+                      new FunctionPlotDemo(this)};
+
 
 void keyPressed() {
-  demo.demoKeyPressed(key);
+  if(key == TAB){
+    demoNum = (demoNum+1) % demos.length;
+    demos[demoNum].demoSetup();
+  } else {
+    demos[demoNum].demoKeyPressed(key);
+  }
 }
 void keyReleased() {
-  demo.demoKeyReleased(key);
+  demos[demoNum].demoKeyReleased(key);
   
 }
 
 void setup(){
   //size(1920,1048,P3D);
   fullScreen(P3D);
-  demo.demoSetup();  
+  demos[demoNum].demoSetup();  
 }
 
 void draw(){
-  demo.demoDraw();
+  demos[demoNum].demoDraw();
 }

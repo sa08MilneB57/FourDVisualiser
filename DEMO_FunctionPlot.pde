@@ -92,8 +92,18 @@ class FunctionPlotDemo implements Demo{
     textAlign(LEFT);
     text(hudLine1,10,20,0);
     
+    String rotationString = "";
+    if(XY !=0){rotationString += "XY ";}
+    if(XZ !=0){rotationString += "XZ ";}
+    if(YZ !=0){rotationString += "YZ ";}
+    if(XW !=0){rotationString += "XW ";}
+    if(YW !=0){rotationString += "YW ";}
+    if(ZW !=0){rotationString += "ZW ";}
     textAlign(RIGHT);
-    text(projName + "\n Global Rotation:" + camRotate,width-10,20,0);
+    text(projName + 
+      "\nGlobal Rotation:" + camRotate +
+      "\n Active Rotations: " + rotationString,width-10,20,0);
+      
     if(recording){noStroke();fill(255,0,0);circle(width-20,20,20);}
     cam.endHUD();
   }
@@ -124,6 +134,9 @@ class FunctionPlotDemo implements Demo{
   void demoKeyPressed(char key){
     if (key=='o') {    //Orthographic Projection
       projection = (projection+1)%4;
+      updateProjString();
+    } else if (key=='O') {    //Orthographic Projection
+      projection = (projection-1 + 4)%4;
       updateProjString();
     } else if (key=='p') { //Perspective Projection
       projection = -1;
