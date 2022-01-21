@@ -68,6 +68,7 @@ class FourFunctionArgand{
   }
   
   void generateSheet(){
+    int colorScale = 5;
     ArrayList<FourVector> points = new ArrayList<FourVector>();
     ArrayList<FourLine> edges = new ArrayList<FourLine>();
     FourFace[] faces = new FourFace[0];
@@ -90,22 +91,22 @@ class FourFunctionArgand{
             if(i != detail-1){
               Complex thatProduct = outputs[index+1];
               Complex avg = thisProduct.add(thatProduct).mult(0.5d);
-              edges.add(new FourLine(index,index + 1, argandColor(avg,10)) );
+              edges.add(new FourLine(index,index + 1, argandColor(avg,colorScale)) );
             }
             if(j != detail-1){
               Complex thatProduct = outputs[index+detail];
               Complex avg = thisProduct.add(thatProduct).mult(0.5d);
-              edges.add(new FourLine(index,index + detail, argandColor(avg,10)) );
+              edges.add(new FourLine(index,index + detail, argandColor(avg,colorScale)) );
             }
             if(k != detail-1){
               Complex thatProduct = outputs[index+detail*detail];
               Complex avg = thisProduct.add(thatProduct).mult(0.5d);
-              edges.add(new FourLine(index,index + detail*detail, argandColor(avg,10)) );
+              edges.add(new FourLine(index,index + detail*detail, argandColor(avg,colorScale)) );
             }
             if(l != detail-1){
               Complex thatProduct = outputs[index+detail*detail*detail];
               Complex avg = thisProduct.add(thatProduct).mult(0.5d);
-              edges.add(new FourLine(index,index + detail*detail*detail, argandColor(avg,10)) );
+              edges.add(new FourLine(index,index + detail*detail*detail, argandColor(avg,colorScale)) );
             }
           }
         }

@@ -48,3 +48,19 @@ class C2HermitianInnerProduct extends ComplexBinaryFunction{
     return z.mult(new Complex(1,-1)).add(w.mult(new Complex(1,1)));
   }
 }
+
+class C2Binomial extends ComplexBinaryFunction{
+  final int accuracy = 30;
+  ComplexFunction rGamma;
+  C2Binomial(){
+    rGamma = new CReciprocalGamma(accuracy);
+  }
+  String name(){return "Binomial: z choose w";}
+  
+  Complex f(Complex z, Complex w){
+    final Complex gammaN  =  rGamma.f(z.add(1)).reciprocal();
+    final Complex gammaD1 =  rGamma.f(w.add(1));
+    final Complex gammaD2 =  rGamma.f(z.sub(w).add(1));
+    return gammaN.mult(gammaD1).mult(gammaD2);
+  }
+}

@@ -1,13 +1,7 @@
 import peasy.*;
 import java.util.HashSet;
 
-interface Demo {
-  void demoSetup();
-  void demoDraw();
-  void demoKeyPressed(char key);
-  void demoKeyReleased(char key);
-  void menuAction(int i);
-}
+
 
 int demoNum = 0;
 final Demo[] demos = {new ShapeDemo(this), 
