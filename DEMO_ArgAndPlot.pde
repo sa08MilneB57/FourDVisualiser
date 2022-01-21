@@ -1,23 +1,16 @@
-class FunctionPlotDemo implements Demo{
-  final ComplexFunction[] FUNCTIONS= {new CIdentity(),  new CReciprocal(),
-                              new CSquare(),    new CCube(),
-                              new CSqrt(),      new CQuartish(),
-                              new CExp(),new CLog(),
-                              
-                              new CSin(),new CCos(),new CTan(),
-                              new CSinh(),new CCosh(),new CTanh(), 
-                              new CASin(),new CACos(),new CATan(),
-                              new CASinh(),new CACosh(),new CATanh(),
-                                
-                              new CBinet(),new CMandel(1000),
-                              new CGauss(),new CGaussAbs(),new CErf(0.125/8),
-                              new CZeta(30),new CGamma(30),new CReciprocalGamma(30)
-                          };
+class ArgandPlotDemo implements Demo{
+  final ComplexBinaryFunction[] FUNCTIONS= {new C2Sum(),
+                                            new C2Difference(),
+                                            new C2Product(),
+                                            new C2Quotient(),
+                                            new C2Power(),
+                                            new C2Root(),
+                                            new C2HermitianInnerProduct()};
   PeasyCam cam;
   ListMenu menu;
-  PApplet parent;  
+  PApplet parent;
   final float degrees = PI/180f;
-  
+
   final float boundaryRadius = 1000;//radius of sphere containing hologram (Size of 3D world)
   final float boundaryBuffer = 10;
   final float shapeStrokeWeight = 0.4;
@@ -33,7 +26,7 @@ class FunctionPlotDemo implements Demo{
   FourMatrix rotorXY, rotorXZ, rotorYZ, rotorXW, rotorYW, rotorZW; //These matrices remain constant through the simulation and are shorthand for rotation matrices.
   FourMatrix negrotorXY, negrotorXZ, negrotorYZ, negrotorXW, negrotorYW, negrotorZW;;
   
-  FourFunctionSurface plot;//currently selected shape
+  FourFunctionArgand plot;//currently selected shape
   String hudLine1;
   
   boolean showMenu = false;
@@ -43,7 +36,7 @@ class FunctionPlotDemo implements Demo{
   boolean showGuides = true;
   boolean recording = false;
   
-  FunctionPlotDemo(PApplet _parent){
+  ArgandPlotDemo(PApplet _parent){
     parent = _parent;
   }
   
@@ -54,6 +47,7 @@ class FunctionPlotDemo implements Demo{
     initialiseRotors();
     
     initialiseCamera();
+    
     menu = createFunctionListMenu(this,FUNCTIONS,18);
     
     updateProjString();
@@ -68,8 +62,9 @@ class FunctionPlotDemo implements Demo{
     
     applyUserRotation();
     showShape();
+
+    drawHUD();    
     
-    drawHUD();
     if(recording){saveFrame("frames/FourDimensions#######.png");}
     
     
@@ -161,7 +156,7 @@ class FunctionPlotDemo implements Demo{
       recording = !recording;
     } else if (key=='x') {  //toggle guides
       showGuides = !showGuides;
-    } else if (key=='#'){  //rotate camera or shape
+    }else if (key=='#'){  //rotate camera or shape
       camRotate=!camRotate;
     } else if (key=='[') { //draw shape lines
       drawLines = !drawLines;
@@ -280,17 +275,8 @@ class FunctionPlotDemo implements Demo{
   }
   
   void menuAction(int i){
-    //changes the currently selected shape
-    if(i==21){//special dispensation for mandelbrot set
-      final double[] xBounds = {-1.5d,0.5d};
-      final double[] yBounds = {-1d,1d};
-      plot = new FourFunctionSurface(new FourVector(0,0,0,20),xBounds,255,yBounds,255);      
-    } else {
-      plot = new FourFunctionSurface(new FourVector(0,0,0,100),5,101,5,101);
-    }
-    plot.applyFunction(FUNCTIONS[i]);
-    plot.generateSheet();
-    hudLine1 = FUNCTIONS[i].name();
+    plot = new FourFunctionArgand(FUNCTIONS[i],new FourVector(0,0,0,150),5,11,20);
+    hudLine1 = FUNCTIONS[i].menuName();
   }
   void updateProjString(){
     //updates the name of the projection displayed on the HUD

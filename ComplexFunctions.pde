@@ -3,6 +3,7 @@ interface ComplexFunction {
   String menuName();
   Complex f(Complex z);
 }
+
 class CIdentity implements ComplexFunction{
   String name(){return "z";}
   String menuName(){return name();}
