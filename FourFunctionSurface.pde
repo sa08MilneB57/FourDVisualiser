@@ -1,4 +1,5 @@
 class FourFunctionSurface{
+  //A 2-manifold embedded in C^2 (R^4) where [x,y]start as [Re(z),Im(z)] and [z,w] start as [Re(f(z)),Im(f(z))]
   int xDetail,yDetail;
   FourShape shape;
   FourVector origin;
@@ -7,13 +8,13 @@ class FourFunctionSurface{
   Complex[] z,w;
   FourFunctionSurface(FourVector _origin,double xRadius, int _xDetail,double yRadius, int _yDetail){
     xDetail = _xDetail;    yDetail = _yDetail;    origin = _origin;
-    generateC2(xRadius,yRadius);
+    generateC1(xRadius,yRadius);
     resetOrientation();
     generateSheet();
   }
   FourFunctionSurface(FourVector _origin,double[] xBounds, int _xDetail,double[] yBounds, int _yDetail){
     xDetail = _xDetail;    yDetail = _yDetail;    origin = _origin;
-    generateC2(xBounds,yBounds);
+    generateC1(xBounds,yBounds);
     resetOrientation();
     generateSheet();
   }
@@ -21,6 +22,12 @@ class FourFunctionSurface{
   void applyFunction(ComplexFunction f){
     for (int i=0; i<z.length; i++){
       w[i] = f.f(z[i]);
+    }
+  }
+  
+  void iterateFunction(ComplexBinaryFunction f){
+    for (int i=0; i<z.length; i++){
+      w[i] = f.f(w[i],z[i]);
     }
   }
   
@@ -32,14 +39,14 @@ class FourFunctionSurface{
   
   void applyMatrix(FourMatrix M,boolean global){
     if(global){
-      camRotation.multiply(M);
+      camRotation = camRotation.multiply(M);
     } else {
-      planeRotation.multiply(M);      
+      planeRotation = planeRotation.multiply(M);      
     }
     shape.applyMatrix(M,global);
   }
   
-  void generateC2(double xRadius,double yRadius){
+  void generateC1(double xRadius,double yRadius){
     double dx = (2*xRadius) / (xDetail-1);
     double dy = (2*xRadius) / (yDetail-1);
     z = new Complex[xDetail * yDetail];
@@ -54,7 +61,7 @@ class FourFunctionSurface{
       }
     }
   }
-  void generateC2(double[] xBounds,double[] yBounds){
+  void generateC1(double[] xBounds,double[] yBounds){
     if(xBounds.length != 2 || yBounds.length != 2){throw new IllegalArgumentException("xBounds and yBounds must be length 2, 1 lower bound, 1 upper bound");}
     double x1 = Math.min(xBounds[0], xBounds[1]);
     double x2 = Math.max(xBounds[0], xBounds[1]);
@@ -74,8 +81,8 @@ class FourFunctionSurface{
       }
     }
   }
-  
-  void generateSheet(){
+  void generateSheet(){generateSheet(false);}
+  void generateSheet(boolean outputColor){
     FourVector[] points = new FourVector[xDetail*yDetail];
     ArrayList<FourLine> edges = new ArrayList<FourLine>();
     FourFace[] faces = new FourFace[0];
@@ -84,10 +91,12 @@ class FourFunctionSurface{
         int ind = i + j*xDetail;
         points[ind] = fourDComplex(z[ind],w[ind]).add(origin);
         if( i+1 < xDetail){
-          edges.add( new FourLine(ind,ind+1,argandColor(z[ind],1)) );
+          color col = (outputColor)  ?  argandColor(w[ind],1)  :  argandColor(z[ind],1);
+          edges.add( new FourLine(ind,ind+1,col) );
         }
         if( j+1 < yDetail ){
-          edges.add( new FourLine(ind,ind+xDetail,argandColor(z[ind],1)) );
+          color col = (outputColor)  ?  argandColor(w[ind],1)  :  argandColor(z[ind],1);
+          edges.add( new FourLine(ind,ind+xDetail,col) );
         }
       }
     }
@@ -105,7 +114,9 @@ color argandColor(Complex z,double maxExpected){
     final float hue = (float)(z.arg()%TAU + TAU) % TAU;
     final double mag = z.mag();
     float l;
-    if (mag <= maxExpected) {
+    if (maxExpected == -1){
+      l = 0.5;
+    } else if (mag <= maxExpected) {
       l = (float)(0.5d*mag/maxExpected);
     } else {
       l = (float)(0.5d*(2d - (maxExpected/(Math.log(mag - maxExpected + 1) + maxExpected))));

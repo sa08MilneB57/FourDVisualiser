@@ -1,18 +1,13 @@
-class FunctionPlotDemo extends Demo{
-  final ComplexFunction[] FUNCTIONS= {new CIdentity(),  new CReciprocal(),
-                              new CSquare(),    new CCube(),
-                              new CSqrt(),      new CQuartish(),
-                              new CExp(),new CLog(),
-                              
-                              new CSin(),new CCos(),new CTan(),
-                              new CSinh(),new CCosh(),new CTanh(), 
-                              new CASin(),new CACos(),new CATan(),
-                              new CASinh(),new CACosh(),new CATanh(),
-                                
-                              new CBinet(),new CMandel(1000),
-                              new CGauss(),new CGaussAbs(),new CErf(0.125/8),
-                              new CZeta(30),new CGamma(30),new CReciprocalGamma(30)
-                          };
+class IterableFunctionDemo extends Demo{
+  final ComplexBinaryFunction[] FUNCTIONS= {new MandelbrotIterable(),
+                                            new CubelbrotIterable(),
+                                            new BurningShipIterable(),
+                                            new MobiusIterable(),
+                                            new TrigIterable(),
+                                            new HyperbolicIterable(),
+                                            new ExponentialIterable()};
+  
+  ComplexBinaryFunction activeFunction = FUNCTIONS[0];
   
   final float shapeStrokeWeight = 0.4;
   
@@ -21,7 +16,7 @@ class FunctionPlotDemo extends Demo{
   boolean drawLines = true;
   boolean drawFaces = true;
   
-  FunctionPlotDemo(PApplet _parent){
+  IterableFunctionDemo(PApplet _parent){
     super(_parent);
   }
   
@@ -35,7 +30,7 @@ class FunctionPlotDemo extends Demo{
     menu = createFunctionListMenu(this,FUNCTIONS,18);
     
     updateProjString();
-    menuAction(1);
+    menuAction(0);
   }
   
   void demoDraw(){
@@ -50,15 +45,13 @@ class FunctionPlotDemo extends Demo{
     drawHUD();
     if(recording){saveFrame("frames/FourDimensions#######.png");}
     
-    
   }
-  
-  
-  
   
   void demoKeyPressed(char key){
     if (key == TAB){
       showMenu = !showMenu;
+    } else if (key==' ') {    //Iterate Function
+      iterateFunction();
     } else if (key=='o') {    //Orthographic Projection
       projection = (projection+1)%4;
       updateProjString();
@@ -189,18 +182,20 @@ class FunctionPlotDemo extends Demo{
     }
   }
   
+  void iterateFunction(){
+    plot.iterateFunction(activeFunction);
+    plot.generateSheet(true);
+  }  
   
   void menuAction(int i){
     //changes the currently selected shape
-    if(i==21){//special dispensation for mandelbrot set
-      final double[] xBounds = {-1.5d,0.5d};
-      final double[] yBounds = {-1d,1d};
-      plot = new FourFunctionSurface(new FourVector(0,0,0,20),xBounds,255,yBounds,255);      
-    } else {
-      plot = new FourFunctionSurface(new FourVector(0,0,0,100),5,101,5,101);
-    }
-    plot.applyFunction(FUNCTIONS[i]);
-    plot.generateSheet();
+    final double[] xBounds = {-2d,2d};
+    final double[] yBounds = {-2d,2d};
+    activeFunction = FUNCTIONS[i];
     hudLine1 = FUNCTIONS[i].name();
+    
+    plot = new FourFunctionSurface(new FourVector(0,0,0,10),xBounds,311,yBounds,311);
+    plot.applyFunction(activeFunction);
+    iterateFunction();
   }
 }

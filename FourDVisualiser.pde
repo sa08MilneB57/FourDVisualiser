@@ -1,20 +1,17 @@
 import peasy.*;
 import java.util.HashSet;
 
-interface Demo {
-  void demoSetup();
-  void demoDraw();
-  void demoKeyPressed(char key);
-  void demoKeyReleased(char key);
-}
+
 
 int demoNum = 0;
 final Demo[] demos = {new ShapeDemo(this), 
-                      new FunctionPlotDemo(this)};
+                      new FunctionPlotDemo(this),
+                      new ArgandPlotDemo(this),
+                      new IterableFunctionDemo(this)};
 
 
 void keyPressed() {
-  if(key == TAB){
+  if(key == BACKSPACE){
     demoNum = (demoNum+1) % demos.length;
     demos[demoNum].demoSetup();
   } else {
