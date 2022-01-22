@@ -6,7 +6,8 @@ import java.util.HashSet;
 int demoNum = 0;
 final Demo[] demos = {new ShapeDemo(this), 
                       new FunctionPlotDemo(this),
-                      new ArgandPlotDemo(this)};
+                      new ArgandPlotDemo(this),
+                      new IterableFunctionDemo(this)};
 
 
 void keyPressed() {

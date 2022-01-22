@@ -25,6 +25,12 @@ class FourFunctionSurface{
     }
   }
   
+  void iterateFunction(ComplexBinaryFunction f){
+    for (int i=0; i<z.length; i++){
+      w[i] = f.f(w[i],z[i]);
+    }
+  }
+  
   void resetOrientation(){
     planeRotation = scalar(1);
     camRotation = scalar(1);
@@ -33,9 +39,9 @@ class FourFunctionSurface{
   
   void applyMatrix(FourMatrix M,boolean global){
     if(global){
-      camRotation.multiply(M);
+      camRotation = camRotation.multiply(M);
     } else {
-      planeRotation.multiply(M);      
+      planeRotation = planeRotation.multiply(M);      
     }
     shape.applyMatrix(M,global);
   }
@@ -75,8 +81,8 @@ class FourFunctionSurface{
       }
     }
   }
-  
-  void generateSheet(){
+  void generateSheet(){generateSheet(false);}
+  void generateSheet(boolean outputColor){
     FourVector[] points = new FourVector[xDetail*yDetail];
     ArrayList<FourLine> edges = new ArrayList<FourLine>();
     FourFace[] faces = new FourFace[0];
@@ -85,10 +91,12 @@ class FourFunctionSurface{
         int ind = i + j*xDetail;
         points[ind] = fourDComplex(z[ind],w[ind]).add(origin);
         if( i+1 < xDetail){
-          edges.add( new FourLine(ind,ind+1,argandColor(z[ind],1)) );
+          color col = (outputColor)  ?  argandColor(w[ind],1)  :  argandColor(z[ind],1);
+          edges.add( new FourLine(ind,ind+1,col) );
         }
         if( j+1 < yDetail ){
-          edges.add( new FourLine(ind,ind+xDetail,argandColor(z[ind],1)) );
+          color col = (outputColor)  ?  argandColor(w[ind],1)  :  argandColor(z[ind],1);
+          edges.add( new FourLine(ind,ind+xDetail,col) );
         }
       }
     }
