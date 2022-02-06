@@ -12,7 +12,7 @@ color YCoCg(float Y, float Co, float Cg,float alpha){
   float R = 255f*(tmp +  Co);
   float G = 255f*(Y   +  Cg);
   float B = 255f*(tmp -  Co);
-  return color(R,G,B,255f*alpha);  
+  return color(R,G,B,255f*alpha);
 }
 
 float[] inverseYCoCg(color col){return inverseYCoCg(red(col),green(col),blue(col));}

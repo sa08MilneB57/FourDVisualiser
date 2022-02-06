@@ -3,12 +3,13 @@ abstract class Demo {
   PeasyCam cam;
   ListMenu menu;
   final float degrees = PI/180f;
+  final color bgcolor = color(50,50,50);
   final color amber = color(200, 150, 0,125);
   final color green = color(0, 50, 0);
 
   final float boundaryRadius = 1000;//radius of sphere containing hologram (Size of 3D world)
   final float boundaryBuffer = 10;
-  final float guideStrokeWeight = 0.2;
+  final float guideStrokeWeight = 0.5;
   
   String projName;//name of the projection
   int projection = -1;//-1 is perspective, 0-3 are orthographic
@@ -36,6 +37,7 @@ abstract class Demo {
   abstract void menuAction(int i);
   
   void drawSetting(){
+    background(bgcolor);
     strokeWeight(guideStrokeWeight);
     noFill();
     stroke(green);
@@ -50,7 +52,7 @@ abstract class Demo {
     lightFalloff(1, 0, 0);
     lightSpecular(128, 128, 128);
     ambientLight(128, 128, 128);
-    directionalLight(128,128,128, cos(frameCount/60f) - 1, sin(10000 + frameCount/50f), cos(50000 + frameCount/70f));
+    directionalLight(128,128,128, 1, 1, -1);
   }
   
   void drawGuides(){
