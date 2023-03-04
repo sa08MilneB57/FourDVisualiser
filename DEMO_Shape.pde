@@ -11,7 +11,8 @@ class ShapeDemo extends Demo {
                                 "Klein Bottle (Figure-8 Embedding)",
                                 "Hyperboloid: x^2+y^2+z^2-w^2",
                                 "Hyperboloid: x^2+y^2-z^2-w^2",
-                                "Cartesian Grid"};
+                                "Cartesian Grid",
+                                "PolyRoots Projective Roots Grid"};
 
   final float shapeStrokeWeight = 0.4;
 
@@ -204,10 +205,10 @@ class ShapeDemo extends Demo {
       shape = pentachoron(new FourVector(0, 0, 0, 51), 49);
       break;
     case 3:
-      shape = orthoplex(new FourVector(0, 0, 0, 50), 50, amber);
+      shape = orthoplex(new FourVector(0, 0, 0, 51), 49, amber);
       break;
     case 4:
-      shape = octaplex(new FourVector(0, 0, 0, 51), 50, amber);
+      shape = octaplex(new FourVector(0, 0, 0, 51), 49, amber);
       break;
     case 5:
       shape = spherinder(new FourVector(0, 0, 0, 105), 80, 80, 32, 16, 16);
@@ -232,6 +233,9 @@ class ShapeDemo extends Demo {
       break;
     case 12:
       shape = cartesian(new FourVector(0, 0, 0, 150), new FourVector(-100, -100, -100, -100), new FourVector(100, 100, 100, 100), 11);
+      break;
+    case 13:
+      shape = polygrid(new FourVector(0, 0, 0, 150), new FourVector(-10, -10, -10, -10), new FourVector(10, 10, 10, 10), 6);
       break;
     default:
       throw new IllegalArgumentException("Invalid shape number");

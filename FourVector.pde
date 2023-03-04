@@ -53,11 +53,6 @@ FourVector lerp(FourVector a, FourVector b, float t){
   return a.add( (b.sub(a)).mult(t) );
 }
 
-FourVector fourDComplex(Complex z, Complex w){return fourDComplex(z, w,10);}
-FourVector fourDComplex(Complex z, Complex w,float scale){
-  return new FourVector(scale * (float)z.re,scale * (float)z.im,scale * (float)w.re,scale * (float)w.im);
-}
-
 FourVector sphericalCoordinates(float lon, float lat, float let){return sphericalCoordinates(lon, lat, let,1f);}
 FourVector sphericalCoordinates(float lon, float lat, float let,float r){
   //on wikipedia for glome let is psi, lat is theta, lon is phi
