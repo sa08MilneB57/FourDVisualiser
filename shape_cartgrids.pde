@@ -23,16 +23,16 @@ FourShape cartesian(FourVector origin, FourVector corner1, FourVector corner2, i
                                     dz*k + zLow,
                                     dw*l + wLow).add(origin));
           if(i != detail-1){
-            edges.add(new FourLine(index,index + 1, color(255,0,0)) );
+            edges.add(new FourLine(index,index + 1, color(255,0,0,100)) );
           }
           if(j != detail-1){
-            edges.add(new FourLine(index,index + detail, color(0,255,0)) );
+            edges.add(new FourLine(index,index + detail, color(0,255,0,100)) );
           }
           if(k != detail-1){
-            edges.add(new FourLine(index,index + detail*detail, color(0,0,255)) );
+            edges.add(new FourLine(index,index + detail*detail, color(0,0,255,100)) );
           }
           if(l != detail-1){
-            edges.add(new FourLine(index,index + detail*detail*detail, color(255,255,0)) );
+            edges.add(new FourLine(index,index + detail*detail*detail, color(255,255,0,100)) );
           }
         }
       }

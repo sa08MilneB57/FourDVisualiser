@@ -12,7 +12,12 @@ class ShapeDemo extends Demo {
                                 "Hyperboloid: x^2+y^2+z^2-w^2",
                                 "Hyperboloid: x^2+y^2-z^2-w^2",
                                 "Cartesian Grid",
-                                "PolyRoots Projective Roots Grid"};
+                                "PolyRoots Projective Roots Grid (Full)",
+                                "PolyRoots Projective Roots Grid (Positive Only)",
+                                "PolyRoots Projective Roots Grid (One Positive)",
+                                "PolyRoots Projective Roots Grid (One Real)",
+                                "PolyRoots Projective Roots Grid (One Pure Imaginary)",
+                              };
 
   final float shapeStrokeWeight = 0.4;
 
@@ -235,7 +240,19 @@ class ShapeDemo extends Demo {
       shape = cartesian(new FourVector(0, 0, 0, 150), new FourVector(-100, -100, -100, -100), new FourVector(100, 100, 100, 100), 11);
       break;
     case 13:
-      shape = polygrid(new FourVector(0, 0, 0, 150), new FourVector(-10, -10, -10, -10), new FourVector(10, 10, 10, 10), 6);
+      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3,-3,-3), new FourVector(3, 3, 3, 3), 16);
+      break;
+    case 14:
+      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(0,0, 0, 0), new FourVector(3, 3, 3, 3), 16);
+      break;
+    case 15:
+      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3, 0, 0), new FourVector(3, 3, 3, 3), 16);
+      break;
+    case 16:
+      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3,-3, 0), new FourVector(3, 3, 3, 0), 16);
+      break;
+    case 17:
+      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3, 0,-3), new FourVector(3, 3, 0, 3), 16);
       break;
     default:
       throw new IllegalArgumentException("Invalid shape number");

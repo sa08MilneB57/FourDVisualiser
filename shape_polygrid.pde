@@ -1,4 +1,4 @@
-FourShape polygrid(FourVector origin, FourVector rootCorner1, FourVector rootCorner2, int detail){
+FourShape polygrid(FourVector origin, float scale,FourVector rootCorner1, FourVector rootCorner2, int detail){
   float da = (rootCorner2.x - rootCorner1.x) / (float)(detail-1);
   float aLow = min(rootCorner1.x, rootCorner2.x);
   float db = (rootCorner2.y - rootCorner1.y) / (float)(detail-1);
@@ -24,11 +24,12 @@ FourShape polygrid(FourVector origin, FourVector rootCorner1, FourVector rootCor
           float d = dd*l + dLow;
           color clr = color(map(i,0,detail-2,15,255),
                             map((k+l)/2,0,detail-2,15,255),
-                            map(j,0,detail-2,15,255));
+                            map(j,0,detail-2,15,255),
+                            100);
           points.add(new FourVector(a*b - c*d,
                                     a*d - c*b,
                                     -a - b,
-                                    -c - d).add(origin));
+                                    -c - d).mult(scale).add(origin));
           if(i != detail-1){
             //edges.add(new FourLine(index,index + 1, color(255,0,0)) );
             edges.add(new FourLine(index,index + 1, clr) );
