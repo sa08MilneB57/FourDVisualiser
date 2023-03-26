@@ -1,11 +1,11 @@
 FourShape polygrid(FourVector origin, float scale,FourVector rootCorner1, FourVector rootCorner2, int detail){
-  float da = (rootCorner2.x - rootCorner1.x) / (float)(detail-1);
+  float da = abs(rootCorner2.x - rootCorner1.x) / (float)(detail-1);
   float aLow = min(rootCorner1.x, rootCorner2.x);
-  float db = (rootCorner2.y - rootCorner1.y) / (float)(detail-1);
+  float db = abs(rootCorner2.y - rootCorner1.y) / (float)(detail-1);
   float bLow = min(rootCorner1.y, rootCorner2.y);
-  float dc = (rootCorner2.z - rootCorner1.z) / (float)(detail-1);
+  float dc = abs(rootCorner2.z - rootCorner1.z) / (float)(detail-1);
   float cLow = min(rootCorner1.z, rootCorner2.z);
-  float dd = (rootCorner2.w - rootCorner1.w) / (float)(detail-1);
+  float dd = abs(rootCorner2.w - rootCorner1.w) / (float)(detail-1);
   float dLow = min(rootCorner1.w, rootCorner2.w);
   ArrayList<FourVector> points = new ArrayList<FourVector>();
   ArrayList<FourLine> edges = new ArrayList<FourLine>();

@@ -1,6 +1,5 @@
-FourShape cliffordtorus(float radius,int detail){return cliffordtorus(new FourVector(0,0,0,0),radius,radius,detail,detail);}
-FourShape cliffordtorus(FourVector center,float radius,int detail){return cliffordtorus(center,radius,radius,detail,detail);}
-FourShape cliffordtorus(FourVector center,float radius1,float radius2,int detail1,int detail2){
+
+FourShape polytorus(FourVector center,float scale,float radius1,float radius2,int detail1,int detail2){
   int totalpoints = detail1*detail2;
   FourVector[] points = new FourVector[totalpoints];
   FourLine[] edges = new FourLine[2*totalpoints];//first half in theta direction, second half in phi direction
@@ -9,8 +8,11 @@ FourShape cliffordtorus(FourVector center,float radius1,float radius2,int detail
     float phi = j*TAU/detail2;
     for (int i=0; i<detail1;i++){
       float theta = i*TAU/detail1;
-      color col= color(125+125*cos(theta),125 + 100*sin(theta),125+125*sin(phi),125);
-      points[j*detail1 + i] = new FourVector(radius1*cos(theta),radius1*sin(theta),radius2*cos(phi),radius2*sin(phi)).add(center);
+      color col= color(125+125*cos(theta),125+100*sin(theta),125+125*sin(phi),100);
+      points[j*detail1 + i] = new FourVector(radius1*radius2*cos(theta + phi),
+                                             radius1*radius2*sin(theta + phi),
+                                            -(radius1*cos(theta) + radius2*cos(phi)),
+                                            -(radius1*sin(theta) + radius2*sin(phi))).mult(scale).add(center);
       if(i==detail1-1){
         edges[j*detail1 + i] = new FourLine(j*detail1 + i,(j-1)*detail1 + i + 1,col);
       } else {

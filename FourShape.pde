@@ -41,6 +41,8 @@ class FourFace {
   public final int hashCode() {return indices.hashCode();}
 }
 
+FourLine nullLine(){return new FourLine(0,0,0);}
+
 //draws a sphere at a particular point in 4D space, a convenience class
 //class FourPoint{
 //  FourVector pos,o;
@@ -192,6 +194,7 @@ class FourShape {
     
     if(drawlines){
       for (FourLine l : lines) {
+        if(l == null){continue;}
         if(l.nullLine){continue;}
         color clr = l.col;
         if(points[l.index1].w <= 0 || points[l.index2].w <= 0){
@@ -223,7 +226,11 @@ class FourShape {
     if (drawlines){
       noFill();
       for (FourLine l : lines) {
-        if(l.nullLine || (points[l.index1].w <= 0 && points[l.index2].w <= 0) || (lineDetail == 2 && (points[l.index1].w <= 0 || points[l.index2].w <= 0))){continue;}
+        if(l == null){continue;}
+        if(l.nullLine || 
+           (points[l.index1].w <= 0 && points[l.index2].w <= 0) ||
+           (lineDetail == 2 && (points[l.index1].w <= 0 ||
+            points[l.index2].w <= 0))){continue;}
         FourVector a = points[l.index1];
         FourVector b = points[l.index2];
         stroke(l.col);

@@ -17,6 +17,14 @@ class ShapeDemo extends Demo {
                                 "PolyRoots Projective Roots Grid (One Positive)",
                                 "PolyRoots Projective Roots Grid (One Real)",
                                 "PolyRoots Projective Roots Grid (One Pure Imaginary)",
+                                "Polytorus r=1",
+                                "Polytorus r=1,6",
+                                "Polytorus r=2,3",
+                                "Polytorus r=3,2",
+                                "Polytorus r=6,1",
+                                "Polytorusshells R <= 3",
+                                "Polytorusshells R <= 1,6",
+                                "Polytorusshells R <= 2,6",
                               };
 
   final float shapeStrokeWeight = 0.4;
@@ -240,19 +248,43 @@ class ShapeDemo extends Demo {
       shape = cartesian(new FourVector(0, 0, 0, 150), new FourVector(-100, -100, -100, -100), new FourVector(100, 100, 100, 100), 11);
       break;
     case 13:
-      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3,-3,-3), new FourVector(3, 3, 3, 3), 16);
+      shape = polygrid(new FourVector(0, 0, 0, 150),12, new FourVector(-3,-3,-3,-3), new FourVector(3, 3, 3, 3), 16);
       break;
     case 14:
-      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(0,0, 0, 0), new FourVector(3, 3, 3, 3), 16);
+      shape = polygrid(new FourVector(0, 0, 0, 150),12, new FourVector(0,0, 0, 0), new FourVector(3, 3, 3, 3), 16);
       break;
     case 15:
-      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3, 0, 0), new FourVector(3, 3, 3, 3), 16);
+      shape = polygrid(new FourVector(0, 0, 0, 150),12, new FourVector(-3,-3, 0, 0), new FourVector(3, 3, 3, 3), 16);
       break;
     case 16:
-      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3,-3, 0), new FourVector(3, 3, 3, 0), 16);
+      shape = polygrid(new FourVector(0, 0, 0, 150),12, new FourVector(-3,-3,-3, 0), new FourVector(3, 3, 3, 0), 16);
       break;
     case 17:
-      shape = polygrid(new FourVector(0, 0, 0, 150),6, new FourVector(-3,-3, 0,-3), new FourVector(3, 3, 0, 3), 16);
+      shape = polygrid(new FourVector(0, 0, 0, 150),12, new FourVector(-3,-3, 0,-3), new FourVector(3, 3, 0, 3), 16);
+      break;
+    case 18:
+      shape = polytorus(new FourVector(0, 0, 0, 150),12,1,1, 32, 32);
+      break;
+    case 19:
+      shape = polytorus(new FourVector(0, 0, 0, 150),12,1,6, 32, 32);
+      break;
+    case 20:
+      shape = polytorus(new FourVector(0, 0, 0, 150),12,2,3, 32, 32);
+      break;
+    case 21:
+      shape = polytorus(new FourVector(0, 0, 0, 150),12,3,2, 32, 32);
+      break;
+    case 22:
+      shape = polytorus(new FourVector(0, 0, 0, 150),12,6,1, 32, 32);
+      break;
+    case 23:
+      shape = polytorusshells(new FourVector(0, 0, 0, 150),12,3,3, 16,16,3,3, true);
+      break;
+    case 24:
+      shape = polytorusshells(new FourVector(0, 0, 0, 150),12,1,6, 16,16,1,6, true);
+      break;
+    case 25:
+      shape = polytorusshells(new FourVector(0, 0, 0, 150),12,2,6, 16,16,2,6, true);
       break;
     default:
       throw new IllegalArgumentException("Invalid shape number");
