@@ -239,10 +239,10 @@ class ShapeDemo extends Demo {
       shape = kleinbottleFIG8(new FourVector(0, 0, 0, 70), 30, 5, 10f, 24, 24);
       break;
     case 10:
-      shape = hyperboloid(new FourVector(0, 0, 0, 105), 50, 32, 16, 32);
+      shape = hyperboloid(new FourVector(0, 0, 0, 105), 10, 32, 16, 32);
       break;
     case 11:
-      shape = hyperboloid2(new FourVector(0, 0, 0, 105), 50, 32, 16, 32);
+      shape = hyperboloid2(new FourVector(0, 0, 0, 105), 10, 32, 16, 32);
       break;
     case 12:
       shape = cartesian(new FourVector(0, 0, 0, 150), new FourVector(-100, -100, -100, -100), new FourVector(100, 100, 100, 100), 11);

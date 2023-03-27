@@ -16,7 +16,7 @@ FourShape polytorusshells(FourVector center,float scale,float maxR1,float maxR2,
           float theta1 = i*TAU/detailT1;
           color col;
           if(shellColor){//color based on which shell or which shell we're in
-            col= color(255f*r1/maxR1,15 + 15*sin(theta1),255f*r2/maxR2,100);
+            col= color(255f*sqrt(r1/maxR1),15 + 15*sin(theta1),255f*pow(r2/maxR2,2),100);
           } else {
             col= color(125+125*cos(theta1),125+100*sin(theta1),125+125*sin(theta2),100);
           }

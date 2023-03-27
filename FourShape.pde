@@ -26,9 +26,19 @@ class FourLine {
 class FourFace {
   int[] indices;
   color col;
+  boolean nullFace;
   FourFace(int[] ind, color _col) {
     indices = ind; 
     col=_col;
+    if(ind==null){
+      nullFace = true;
+    } else {
+      for(int j=0; j<ind.length && !nullFace; j++){
+        for(int i=0; i<j && !nullFace; i++){
+          nullFace = ind[i] == ind[j];
+        }
+      }
+    }
   }
   @Override
   public boolean equals(Object o){
@@ -42,6 +52,7 @@ class FourFace {
 }
 
 FourLine nullLine(){return new FourLine(0,0,0);}
+FourFace nullFace(){return new FourFace(null,color(255,0,255));}
 
 //draws a sphere at a particular point in 4D space, a convenience class
 //class FourPoint{
