@@ -8,7 +8,8 @@ FourShape polytorus(FourVector center,float scale,float radius1,float radius2,in
     float phi = j*TAU/detail2;
     for (int i=0; i<detail1;i++){
       float theta = i*TAU/detail1;
-      color col= color(125+125*cos(theta),125+100*sin(theta),125+125*sin(phi),100);
+      //color col= color(125+125*cos(theta),125+100*sin(theta),125+125*sin(phi),100);
+      color col= color(50 + i*200f/detail1,(abs(i-j)<=1)?200:50,50 + j*200f/detail2,100);
       points[j*detail1 + i] = new FourVector(radius1*radius2*cos(theta + phi),
                                              radius1*radius2*sin(theta + phi),
                                             -(radius1*cos(theta) + radius2*cos(phi)),
