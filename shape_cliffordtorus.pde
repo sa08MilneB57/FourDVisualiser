@@ -9,7 +9,8 @@ FourShape cliffordtorus(FourVector center,float radius1,float radius2,int detail
     float phi = j*TAU/detail2;
     for (int i=0; i<detail1;i++){
       float theta = i*TAU/detail1;
-      color col= color(125+125*cos(theta),125 + 100*sin(theta),125+125*sin(phi),125);
+      //color col= color(125+125*cos(theta),125 + 100*sin(theta),125+125*sin(phi),125);
+      color col= color(50 + i*200f/detail1,(abs(i-j)<=1)?200:50,50 + j*200f/detail2,100);
       points[j*detail1 + i] = new FourVector(radius1*cos(theta),radius1*sin(theta),radius2*cos(phi),radius2*sin(phi)).add(center);
       if(i==detail1-1){
         edges[j*detail1 + i] = new FourLine(j*detail1 + i,(j-1)*detail1 + i + 1,col);
