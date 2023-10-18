@@ -64,3 +64,14 @@ class C2Binomial extends ComplexBinaryFunction{
     return gammaN.mult(gammaD1).mult(gammaD2);
   }
 }
+
+class C2Chebyshev extends ComplexBinaryFunction{
+  C2Chebyshev(){super();}
+  String name(){return "Max(|z|,|w|)exp( i(arg(w) - arg(z)) )";}
+  
+  Complex f(Complex z, Complex w){
+    double size = Math.max( z.mag(), w.mag() );
+    double phase = w.arg() - z.arg();
+    return fromPolar(size,phase);
+  }
+}

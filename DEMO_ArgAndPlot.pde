@@ -6,7 +6,9 @@ class ArgandPlotDemo extends Demo{
                                             new C2Power(),
                                             new C2Root(),
                                             new C2HermitianInnerProduct(),
-                                            new C2Binomial()};
+                                            new C2Binomial(),
+                                            new C2Chebyshev()
+                                          };
   final float shapeStrokeWeight = 0.4;
   
   

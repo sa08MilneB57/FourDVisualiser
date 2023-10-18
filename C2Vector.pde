@@ -27,7 +27,8 @@ class C2Vector{
   Complex hermitianProductAsKet(C2Vector v){return x.mult(v.x.conj()).add( y.mult(v.y.conj()) );}//where "this" is a Ket, and v is a Bra
   double mag2(){return x.mag2() + y.mag2();}
   double mag() {return Math.sqrt(mag2());}
-  
+  double magChebyshev(){return Math.max(x.mag(),y.mag());}
+  double phaseDiff(){return y.arg() - x.arg();}
 }
 
 C2Vector lerp(C2Vector a, C2Vector b, double t){
